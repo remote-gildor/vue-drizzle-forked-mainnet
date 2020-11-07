@@ -1,0 +1,40 @@
+{
+  "name": "vue-drizzle-forked-mainnet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "truffle-config.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node ./test/utils/test-chain.js",
+    "migrate": "truffle migrate --reset --network test",
+    "migrate-and-test": "npm run migrate && npm test"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "./test/utils/test-environment.js",
+    "testTimeout": 120000
+  },
+  "keywords": [],
+  "author": {
+    "name": "Gildor",
+    "url": "https://github.com/remote-gildor/vue-drizzle-forked-mainnet"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/test-helpers": "^0.5.9",
+    "@studydefi/money-legos": "^2.4.1",
+    "@truffle/hdwallet-provider": "^1.0.34",
+    "@uniswap/v2-core": "^1.0.1",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "ethers": "^4.0.46",
+    "openzeppelin-solidity": "^2.1.1"
+  },
+  "devDependencies": {
+    "ganache-cli": "^6.9.1",
+    "ganache-core": "^2.10.2",
+    "jest": "^25.4.0",
+    "truffle": "^5.1.22"
+  }
+}
