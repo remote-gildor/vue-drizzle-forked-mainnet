@@ -39,16 +39,16 @@ npm start
 **Option B:**
 
 ```bash
-ganache-cli --fork <infura-url>
+ganache-cli --fork <infura-url> --networkId=1337 --account="<first-private-key>,1000000000000000000000" --account="<second-private-key>,1000000000000000000000" 
 ```
-
-> Note that Option B does not give 1000 ETH to the private keys that you've specified in `.env` (Option A does).
 
 ## Run tests
 
 ```bash
 npm test
 ```
+
+> Important: make sure to start the Ganache instance with `npm start` before you run tests. 
 
 ## Sources
 

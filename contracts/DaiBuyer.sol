@@ -2,7 +2,7 @@ pragma solidity >=0.6.2 <0.7.0;
 
 import '@uniswap/v2-periphery/contracts/libraries/UniswapV2Library.sol';
 import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
-import '@uniswap/v2-periphery/contracts/UniswapV2Router02.sol';
+import '@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol';
 
 /*
 A smart contract that buys Dai on Uniswap on behalf of the ETH sender (msg.sender)
@@ -22,8 +22,22 @@ contract DaiBuyer {
   }
 
   receive() external payable {
-    // buy Dai on Uniswap
+    // emit the event that says that ETH was received by the sender
+    emit Received(msg.sender, msg.value);
 
+    // require the msg.value to be a non-zero value
+    require(msg.value > 0);
+
+    // prepare Uniswap path
+    address[] memory path = new address[](2);
+    path[0] = uniswapRouter.WETH();
+    path[1] = DAI;
+
+    // deadline
+    uint deadline = now + 15;
+
+    // buy Dai on Uniswap (receive a minimum of 0 Dai and send it back to the sender)
+    uniswapRouter.swapExactETHForTokens(0, path, msg.sender, deadline);
   }
 
 }
