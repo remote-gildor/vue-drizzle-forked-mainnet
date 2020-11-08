@@ -44,9 +44,13 @@ ganache-cli --fork <infura-url> --networkId=1337 --account="<first-private-key>,
 
 ## Run tests
 
+First run:
+
 ```bash
-npm test
+npm run migrate-and-test
 ```
+
+All the next runs can be just `npm test`.
 
 > Important: make sure to start the Ganache instance with `npm start` before you run tests. 
 
