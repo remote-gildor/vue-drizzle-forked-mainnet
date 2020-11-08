@@ -1,61 +1,46 @@
-require("dotenv").config();
-const { ethers } = require("ethers");
+const {
+  BN,           // Big Number support 
+  constants,    // Common constants, like the zero address and largest integers
+  expectEvent,  // Assertions for emitted events
+  expectRevert, // Assertions for transactions that should fail
+} = require('@openzeppelin/test-helpers');
+
+const { assert } = require("chai");
+
 const erc20 = require("@studydefi/money-legos/erc20");
+const { web3 } = require('@openzeppelin/test-helpers/src/setup');
 
-const fromWei = (x, u = 18) => ethers.utils.formatUnits(x, u);
+// helper
+const ether = (n) => web3.utils.toWei(n.toString(), 'ether');
 
-const DaiBuyer = require("../vapp/src/contracts/DaiBuyer.json");
+// artifacts
+const DaiBuyer = artifacts.require("DaiBuyer");
 
-describe("DaiBuyer.sol", () => {
-  let wallet;
-  let provider = ethers.getDefaultProvider();
+contract("DaiBuyer", accounts => {
+  let wallet = accounts[1];
 
-  // get DaiBuyer contract instance
-  let daiBuyerAddress = DaiBuyer.networks["1"].address;
-  let DaiBuyerContract = new ethers.Contract(daiBuyerAddress, DaiBuyer.abi, provider);
+  // get Dai contract
+  const daiContract = new web3.eth.Contract(erc20.dai.abi, erc20.dai.address);
 
-  console.log("DAI address: " + erc20.dai.address);
-
-  // Dai contract
-  const daiContract = new ethers.Contract(
-    erc20.dai.address,
-    erc20.dai.abi,
-    provider
-  );
-
-  beforeAll(async () => {
-    wallet = global.wallet;
+  beforeEach(async () => {
+    this.instance = await DaiBuyer.deployed();
   });
 
-  test("initial DAI balance of 0", async () => {
-    const daiBalance = await daiContract.balanceOf(wallet.address);
-    expect(fromWei(daiBalance)).toBe("0.0");
-  });
+  describe("Initial balances", () => {
 
-  test("initial ETH balance of 1000 ETH", async () => {
-    const ethBalance = await wallet.getBalance();
-    expect(fromWei(ethBalance)).toBe("1000.0");
-  });
-
-  test("send ETH to DaiBuyer contract and receive Dai back", async () => {
-
-    /*
-    const response = await wallet.sendTransaction({
-      to: daiBuyerAddress,
-      value: ethers.utils.parseEther('10')
-    });
-    */
-
-    await DaiBuyerContract.buyDai({
-      from: wallet.address,
-      value: ethers.utils.parseEther('10')
+    it("User has 100 ETH balance", async () => {
+      let balance = await web3.eth.getBalance(wallet);
+      assert.equal(balance, ether(100));
     });
 
-    //const ethBalance = await wallet.getBalance();
-    //expect(fromWei(ethBalance)).toBe("1000.0");
+    it("User has 0 DAI balance", async () => {
+      const daiBalance = await daiContract.methods.balanceOf(wallet).call();
 
-    //const daiBalance = await daiContract.balanceOf(wallet.address);
-    //expect(fromWei(daiBalance)).toBe("0.0");
+      console.log(daiBalance);
+
+      assert.equal(daiBalance, 0);
+    });
 
   });
+
 });
