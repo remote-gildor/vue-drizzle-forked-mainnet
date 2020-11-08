@@ -12,12 +12,6 @@ This is an example dApp with a Vue/Drizzle front-end that uses a forked mainnet 
 npm install
 ```
 
-## Enter the required secret keys in `.env`
-
-Rename the `.env-example` file into `.env` and enter the required secret keys.
-
-> IMPORTANT: Do not use Private Keys that you use on a real mainnet!
-
 ## MetaMask setup
 
 Add a new Custom RPC:
@@ -26,37 +20,24 @@ Add a new Custom RPC:
 - URL: http://127.0.0.1:8545
 - Chain ID: 1337
 
-Also import both of your private keys from `.env` as MetaMask accounts (if you haven't got them there already).
-
 ## Run ganache-cli with a forked mainnet state
 
-**Option A (recommended):**
-
 ```bash
-npm start
+ganache-cli --fork <node-url>
 ```
 
-**Option B:**
+For a node URL, you can use either your own mainnet node, or [Alchemy](https://dashboard.alchemyapi.io/signup?referral=5d4115e7-8c63-468d-b248-59f96c220a14), or Infura. 
 
-```bash
-ganache-cli --fork <infura-url> --networkId=1337 --account="<first-private-key>,1000000000000000000000" --account="<second-private-key>,1000000000000000000000" 
-```
+**Alchemy is better than Infura** because it gives you unlimited archival node access (with Infura you only get the last 30 min, which means you have to restart Ganache every 30 minutes). Also, Alchemy analytics are much better than Infura's, and you can see requests right away (Infura has a long lag).
+
+> You can add an optional flag of `--networkId=1337`. If you'd like to create one or more accounts with ETH balances, use this flag: `--account="<private-key>,1000000000000000000000"` (if you want multiple accounts, use this flag multiple times).
 
 ## Run tests
 
-First run:
-
 ```bash
-npm run migrate-and-test
+truffle test
 ```
 
 All the next runs can be just `npm test`.
 
-> Important: make sure to start the Ganache instance with `npm start` before you run tests. 
-
-## Sources
-
-This example builds upon two Truffle boxes:
-
-- [vue-box](https://github.com/truffle-box/vue-box) - a Vue/Drizzle example box
-- [defi-box](https://github.com/truffle-box/defi-box) - an example of how to fork mainnet with Ganache CLI
+> Important: make sure to start the Ganache instance before you run tests. 
