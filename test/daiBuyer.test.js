@@ -17,28 +17,60 @@ const ether = (n) => web3.utils.toWei(n.toString(), 'ether');
 const DaiBuyer = artifacts.require("DaiBuyer");
 
 contract("DaiBuyer", accounts => {
+  // user's wallet and balances
   let wallet = accounts[1];
+  let ethBalance;
+  let daiBalance;
 
   // get Dai contract
   const daiContract = new web3.eth.Contract(erc20.dai.abi, erc20.dai.address);
 
   beforeEach(async () => {
-    this.instance = await DaiBuyer.deployed();
+    // update balances
+    ethBalance = await web3.eth.getBalance(wallet);
+    daiBalance = await daiContract.methods.balanceOf(wallet).call();
   });
 
-  describe("Initial balances", () => {
+  describe("DAI smart contract sanity check", () => {
 
-    it("User has 100 ETH balance", async () => {
-      let balance = await web3.eth.getBalance(wallet);
-      assert.equal(balance, ether(100));
+    it("checks if DAI token name is correct", async () => {
+      const daiName = await daiContract.methods.name().call();
+      assert.equal(daiName, "Dai Stablecoin");
     });
 
-    it("User has 0 DAI balance", async () => {
-      const daiBalance = await daiContract.methods.balanceOf(wallet).call();
+  });
 
-      console.log(daiBalance);
+  describe("Send ETH to DaiBuyer and receive DAI", () => {
+    const etherToSend = 1;
+    const valueToSend = ether(etherToSend);
+    let oldEthBalance;
+    let oldDaiBalance;
 
-      assert.equal(daiBalance, 0);
+    it("successfully sends ETH to DaiBuyer", async () => {
+      assert.isTrue(ethBalance > 0); // if ETH balance dropped to 0, restart Ganache
+
+      // store previous balances (needed in the next test)
+      oldEthBalance = await web3.eth.getBalance(wallet);
+      oldDaiBalance = await daiContract.methods.balanceOf(wallet).call();
+
+      // send ETH transaction to DaiBuyer smart contract
+      let tx = {
+        from: wallet,
+        to: DaiBuyer.address,
+        value: valueToSend,
+        gas: web3.utils.toBN(6721975)
+      };
+
+      await web3.eth.sendTransaction(tx);
+
+    });
+    
+    it("shows that user now has a smaller ETH balance", async () => {
+      assert.isTrue(oldEthBalance > ethBalance);
+    });
+
+    it("shows that user now has a bigger DAI balance than before", async () => {
+      assert.isTrue(daiBalance > oldDaiBalance);
     });
 
   });

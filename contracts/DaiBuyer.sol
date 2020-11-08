@@ -35,7 +35,7 @@ contract DaiBuyer {
     uint deadline = now + 15;
 
     // buy Dai on Uniswap (receive a minimum of 0 Dai and send it back to the sender)
-    uniswapRouter.swapExactETHForTokens(0, path, msg.sender, deadline);
+    uniswapRouter.swapExactETHForTokens{value: msg.value}(0, path, msg.sender, deadline);
   }
 
 }
