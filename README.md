@@ -1,7 +1,5 @@
 # Vue Drizzle dApp that uses a forked mainnet
 
-> IMPORTANT: This example is in heavy development, the basic functionality is not completed yet.
-
 This is an example dApp with a Vue/Drizzle front-end that uses a forked mainnet as a localhost blockchain simulation (via ganache-cli).
 
 > This will not download the whole mainnet state on your computer, so no need to worry about disk space. Read more [here](https://studydefi.com/forking-off-mainnet/), [here](https://medium.com/@samajammin/how-to-interact-with-ethereums-mainnet-in-a-development-environment-with-ganache-3d8649df0876), and [here](https://medium.com/ethereum-grid/forking-ethereum-mainnet-mint-your-own-dai-d8b62a82b3f7).
@@ -65,3 +63,7 @@ Then navigate to the vapp folder and run the Vue dApp:
 cd vapp
 npm run serve
 ```
+## TODO
+
+- Refresh DAI balance after ETH tx is successful
+- Implement Toast notification
