@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from "./store/index.js";
 import router from "./router.js";
+import Toasted from 'vue-toasted';
 
 import drizzleVuePlugin from '@drizzle/vue-plugin'
 import drizzleOptions from './drizzleOptions'
@@ -16,6 +17,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(drizzleVuePlugin, { store, drizzleOptions });
+
+Vue.use(Toasted);
 
 Vue.config.productionTip = false;
 

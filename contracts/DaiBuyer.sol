@@ -12,17 +12,14 @@ contract DaiBuyer {
   address internal DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
 
   IUniswapV2Router02 public uniswapRouter;
-
-  event Received(address, uint);
+  
+  event Completed();
 
   constructor() public {
     uniswapRouter = IUniswapV2Router02(UNISWAP_ROUTER);
   }
 
   receive() external payable {
-    // emit the event that says that ETH was received by the sender
-    emit Received(msg.sender, msg.value);
-
     // require the msg.value to be a non-zero value
     require(msg.value > 0);
 
@@ -36,6 +33,8 @@ contract DaiBuyer {
 
     // buy Dai on Uniswap (receive a minimum of 0 Dai and send it back to the sender)
     uniswapRouter.swapExactETHForTokens{value: msg.value}(0, path, msg.sender, deadline);
+
+    emit Completed();
   }
 
 }

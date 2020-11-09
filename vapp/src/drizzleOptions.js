@@ -12,7 +12,7 @@ const options = {
     DaiBuyer
   ],
   events: {
-    // ContractName: ['ContractFunction']
+    DaiBuyer: ['Completed']
   },
   polls: {
     accounts: 15000

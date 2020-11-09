@@ -5,6 +5,8 @@
     <keep-alive>
       <router-view />
     </keep-alive>
+
+    <Toast />
   </div>
 
   <div v-else>Loading...</div>
@@ -13,11 +15,13 @@
 <script>
 import Navbar from "./components/Navbar";
 import { mapGetters } from "vuex";
+import Toast from "./components/Toast";
 
 export default {
   name: "app",
   components: {
-    Navbar
+    Navbar,
+    Toast
   },
   computed: mapGetters("drizzle", ["isDrizzleInitialized"])
 }

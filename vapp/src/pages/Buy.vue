@@ -55,10 +55,38 @@ export default {
       let recipient = this.drizzleInstance.contracts["DaiBuyer"].address;
       let valueWei = this.drizzleInstance.web3.utils.toWei(this.ethValue, "ether");
 
+      let component = this;
+
       this.drizzleInstance.web3.eth.sendTransaction({
           from: sender,
           to: recipient,
           value: valueWei
+      }, function(error, hash){
+        window.console.log("The transaction has been sent. Please wait for the block confirmation.");
+
+        // create a waiting toast
+        let waitingToast = component.$toasted.show('Waiting for transaction to complete...', {
+          type: 'info',
+          duration: null,
+          theme: "bubble",
+          position: "top-center"
+        });
+
+        if (error) {
+          waitingToast.goAway(0); // remove the waiting toast
+
+          // create an error toast
+          component.$toasted.show('Your transaction has failed. Please try again, perhaps with a higher gas limit.', {
+            type: 'error',
+            duration: 9000,
+            theme: "bubble",
+            position: "top-center"
+          });
+        }
+
+        if (hash) {
+          waitingToast.goAway(0); // remove the waiting toast
+        }
       });
     }
   }

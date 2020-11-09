@@ -23,8 +23,8 @@ cd vapp && npm install
 Add a new Custom RPC:
 
 - Name: Ganache 8545
-- URL: http://127.0.0.1:8545
-- Chain ID: 1337
+- URL: http://127.0.0.1:8545 (or localhost:8545)
+- Chain ID: 1337 (or 0x539)
 
 ## Run ganache-cli with a forked mainnet state
 
@@ -46,16 +46,17 @@ truffle test
 
 All the next runs can be just `npm test`.
 
-> Important: make sure to start the Ganache instance before you run tests. You might have to do `truffle migrate` before running tests.
+> Important: make sure to start the Ganache instance before you run tests. You might have to do `truffle migrate` or `truffle migrate --reset` before running tests.
 
 ## Run Vue dApp
 
-Make sure the smart contracts are compiled and deployed first:
+Make sure ganache-cli is running and the smart contract is deployed:
 
 ```bash
-truffle compile
 truffle migrate
 ```
+
+> Consider doing `truffle migrate --reset` instead if you've changed the smart contract in the meantime.
 
 Then navigate to the vapp folder and run the Vue dApp:
 
@@ -63,7 +64,3 @@ Then navigate to the vapp folder and run the Vue dApp:
 cd vapp
 npm run serve
 ```
-## TODO
-
-- Refresh DAI balance after ETH tx is successful
-- Implement Toast notification
