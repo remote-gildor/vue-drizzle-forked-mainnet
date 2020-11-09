@@ -1,12 +1,12 @@
 <template>
   <b-container>
-    <h1>My Account</h1>
+    <h1>Buy some DAI!</h1>
   </b-container>
 </template>
 
 <script>
 export default {
-  name: "Account"
+  name: "Buy"
 }
 </script>
 

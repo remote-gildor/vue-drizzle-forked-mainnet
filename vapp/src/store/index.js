@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import profile from "./modules/profile";
 
-// load vuex
 Vue.use(Vuex);
 
-// create store
 export default new Vuex.Store({
-    state: {
-        
+    modules: {
+        profile
     }
 });

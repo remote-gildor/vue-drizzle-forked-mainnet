@@ -8,8 +8,16 @@ This is an example dApp with a Vue/Drizzle front-end that uses a forked mainnet 
 
 ## Install the needed dependencies
 
+In root:
+
 ```bash
 npm install
+```
+
+Then navigate to vapp/ and install npm dependencies there, too:
+
+```bash
+cd vapp && npm install
 ```
 
 ## MetaMask setup
@@ -40,4 +48,20 @@ truffle test
 
 All the next runs can be just `npm test`.
 
-> Important: make sure to start the Ganache instance before you run tests. 
+> Important: make sure to start the Ganache instance before you run tests. You might have to do `truffle migrate` before running tests.
+
+## Run Vue dApp
+
+Make sure the smart contracts are compiled and deployed first:
+
+```bash
+truffle compile
+truffle migrate
+```
+
+Then navigate to the vapp folder and run the Vue dApp:
+
+```bash
+cd vapp
+npm run serve
+```

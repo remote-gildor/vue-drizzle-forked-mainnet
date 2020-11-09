@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Main from "./pages/Main";
-import Account from "./pages/Account";
-import Stats from "./pages/Stats";
+import Profile from "./pages/Profile";
+import Buy from "./pages/Buy";
 
 Vue.use(Router);
 
@@ -18,15 +18,15 @@ export default new Router({
         },
 
         {
-            path: "/account",
-            name: "account",
-            component: Account
+            path: "/profile",
+            name: "profile",
+            component: Profile
         },
 
         {
-            path: "/stats",
-            name: "stats",
-            component: Stats
+            path: "/buy",
+            name: "buy",
+            component: Buy
         }
     ]
 });

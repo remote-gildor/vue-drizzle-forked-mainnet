@@ -1,7 +1,10 @@
 <template>
   <div v-if="isDrizzleInitialized" id="app">
     <Navbar />
-    <router-view />
+
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </div>
 
   <div v-else>Loading...</div>

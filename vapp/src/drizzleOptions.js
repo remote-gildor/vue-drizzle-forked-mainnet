@@ -1,4 +1,4 @@
-//import ContractName from './contracts/ContractName.json'
+import DaiBuyer from './contracts/DaiBuyer.json'
 
 const options = {
   web3: {
@@ -9,7 +9,7 @@ const options = {
     }
   },
   contracts: [
-    // ContractName
+    DaiBuyer
   ],
   events: {
     // ContractName: ['ContractFunction']
