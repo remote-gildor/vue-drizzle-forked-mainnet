@@ -32,6 +32,8 @@ contract DaiBuyer {
     uint deadline = now + 15;
 
     // buy Dai on Uniswap (receive a minimum of 0 Dai and send it back to the sender)
+    // bear in mind that setting a 0 minimum balance is not a good practice and can even be a security risk
+    // so for production code, calculate the min amount before doing the swap
     uniswapRouter.swapExactETHForTokens{value: msg.value}(0, path, msg.sender, deadline);
 
     emit Completed();
